@@ -1,14 +1,12 @@
 import React from 'react'
-import Header from '../components/Header'
 import Aside from '../components/Aside'
 import { Outlet } from 'react-router-dom'
 function Dashboard() {
   return (
     <div>
-        <Header></Header>
-        <div>
+        <div className='flex min-h-screen bg-gray-100'>
             <Aside></Aside>
-            <main>
+            <main className='flex-1 p-6'>
                 <Outlet></Outlet>
             </main>
         </div>

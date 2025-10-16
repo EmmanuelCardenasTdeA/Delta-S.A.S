@@ -57,7 +57,7 @@ app.put("/updateUser",(req,res)=>{
             if(err){
                 console.log(err)
             }else{
-                req.send("Empleado actualizado correctamente")
+                res.send("Empleado actualizado correctamente")
             }
         }
     )

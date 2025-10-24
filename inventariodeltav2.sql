@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-10-2025 a las 20:07:41
+-- Tiempo de generación: 21-10-2025 a las 02:07:46
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -20,6 +20,34 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `inventariodeltav2`
 --
+
+DELIMITER $$
+--
+-- Procedimientos
+--
+CREATE DEFINER=`root`@`localhost` PROCEDURE `createUser` (IN `p_id` BIGINT, IN `p_nombre` VARCHAR(50), IN `p_apellido` VARCHAR(50), IN `p_rol` CHAR(10))   BEGIN
+    INSERT INTO usuario (id_documento, nombre, apellido, rol)
+    VALUES (p_id, p_nombre, p_apellido, p_rol);
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `deleteUser` (IN `p_id` BIGINT)   BEGIN
+    DELETE FROM usuario WHERE id_documento = p_id;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getUsers` ()   BEGIN
+    SELECT * FROM usuario;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `updateUser` (IN `p_old_id` BIGINT, IN `p_new_id` BIGINT, IN `p_nombre` VARCHAR(50), IN `p_apellido` VARCHAR(50), IN `p_rol` CHAR(10))   BEGIN
+    UPDATE usuario
+    SET id_documento = p_new_id,
+        nombre = p_nombre,
+        apellido = p_apellido,
+        rol = p_rol
+    WHERE id_documento = p_old_id;
+END$$
+
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -105,7 +133,8 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`id_documento`, `nombre`, `apellido`, `rol`) VALUES
-(1, 'Emmanuel', 'Cardenas', 'DUEÑO');
+(1, 'Emmanuel', 'Cardenas', 'DUEÑO'),
+(2, 'Santiago', 'Salazar', 'DUEÑO');
 
 -- --------------------------------------------------------
 

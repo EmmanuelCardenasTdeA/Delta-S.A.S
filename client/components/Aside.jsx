@@ -19,7 +19,7 @@ function Aside() {
   return (
     <aside className="w-64 bg-gray-900 text-gray-100 flex flex-col">
       <div className="p-4 text-2xl font-bold border-b border-gray-700">
-        Delta S.A.S
+        BrickNet
       </div>
 
       <nav className="flex-1 p-4 space-y-2">

@@ -29,10 +29,10 @@ function Login() {
     <div className="min-h-screen flex">
       {/* Lado izquierdo */}
       <div
-        className="hidden md:flex w-2/3 bg-cover bg-center justify-start items-start p-6" style={{backgroundImage: "url('../public/1065.jpg')"}}
+        className="hidden md:flex w-2/3 bg-cover bg-center p-6 mx-auto min-h-screen flex justify-center items-center" style={{backgroundImage: "url('/1065.jpg')"}}
       >
-        <div className="text-black text-9xl font-bold flex items-center gap-3 ">
-          DELTA
+        <div className="text-black text-9xl font-bold flex items-center justify-center drop-shadow-lg">
+          BrickNet
         </div>
       </div>
 

@@ -23,12 +23,16 @@ function BodegaForm({ onClose, onSuccess, bodegaData }) {
 
     if (bodegaData) {
       axios
-        .put(`http://localhost:3000/updateBodega/${bodegaData.id_bodega}`, { nombre })
+        .put(`http://localhost:3000/updateBodega/${bodegaData.id_bodega}`, {
+          nombre,
+        })
         .then(() => {
           noti.fire("Bodega actualizada", "", "success");
           onSuccess();
         })
-        .catch(() => noti.fire("Error", "No se pudo actualizar la bodega", "error"));
+        .catch(() =>
+          noti.fire("Error", "No se pudo actualizar la bodega", "error")
+        );
     } else {
       axios
         .post("http://localhost:3000/createBodega", { nombre })
@@ -36,7 +40,9 @@ function BodegaForm({ onClose, onSuccess, bodegaData }) {
           noti.fire("Bodega registrada", "", "success");
           onSuccess();
         })
-        .catch(() => noti.fire("Error", "No se pudo registrar la bodega", "error"));
+        .catch(() =>
+          noti.fire("Error", "No se pudo registrar la bodega", "error")
+        );
     }
   };
 

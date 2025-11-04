@@ -21,9 +21,23 @@ function VentasForm({ onClose, onSuccess, sellData }) {
 
   // Cargar productos, bodegas y usuarios
   useEffect(() => {
-    axios.get("http://localhost:3000/getProducts").then((res) => setProductos(res.data));
-    axios.get("http://localhost:3000/getBodegas").then((res) => setBodegas(res.data));
-    axios.get("http://localhost:3000/getUsuariosActivos").then((res) => setUsuarios(res.data));
+    axios
+      .get("http://localhost:3000/getProducts")
+      .then((res) => setProductos(res.data))
+      .catch((err) => console.error("Error al cargar productos:", err));
+
+    axios
+      .get("http://localhost:3000/getBodegas")
+      .then((res) => setBodegas(res.data))
+      .catch((err) => console.error("Error al cargar bodegas:", err));
+
+    axios
+      .get("http://localhost:3000/getUsuariosActivos")
+      .then((res) => {
+        const data = Array.isArray(res.data[0]) ? res.data[0] : res.data;
+        setUsuarios(data);
+      })
+      .catch((err) => console.error("Error al cargar usuarios:", err));
 
     if (sellData) {
       setFormData({
@@ -61,10 +75,15 @@ function VentasForm({ onClose, onSuccess, sellData }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const { id_producto, id_bodega, cantidad, id_responsable, fecha } = formData;
+    const { id_producto, id_bodega, cantidad, id_responsable, fecha } =
+      formData;
 
     if (!id_producto || !id_bodega || !cantidad || !id_responsable) {
-      noti.fire("Campos incompletos", "Por favor llene todos los campos", "warning");
+      noti.fire(
+        "Campos incompletos",
+        "Por favor llene todos los campos",
+        "warning"
+      );
       return;
     }
 
@@ -77,7 +96,9 @@ function VentasForm({ onClose, onSuccess, sellData }) {
       return;
     }
 
-    const fechaMySQL = fecha ? new Date(fecha).toISOString().slice(0, 19).replace("T", " ") : new Date().toISOString().slice(0, 19).replace("T", " ");
+    const fechaMySQL = fecha
+      ? new Date(fecha).toISOString().slice(0, 19).replace("T", " ")
+      : new Date().toISOString().slice(0, 19).replace("T", " ");
 
     if (sellData) {
       // EDITAR → PUT
@@ -90,7 +111,11 @@ function VentasForm({ onClose, onSuccess, sellData }) {
           id_user: id_responsable,
         })
         .then(() => {
-          noti.fire("Venta actualizada", "La venta se actualizó correctamente", "success");
+          noti.fire(
+            "Venta actualizada",
+            "La venta se actualizó correctamente",
+            "success"
+          );
           onSuccess();
         })
         .catch(() => {
@@ -107,7 +132,11 @@ function VentasForm({ onClose, onSuccess, sellData }) {
           id_user: id_responsable,
         })
         .then(() => {
-          noti.fire("Venta registrada", "La venta se guardó correctamente", "success");
+          noti.fire(
+            "Venta registrada",
+            "La venta se guardó correctamente",
+            "success"
+          );
           onSuccess();
         })
         .catch((err) => {
@@ -187,8 +216,13 @@ function VentasForm({ onClose, onSuccess, sellData }) {
             <span className="text-gray-700 font-medium">Responsable</span>
             <select
               name="id_responsable"
-              value={formData.id_responsable}
-              onChange={handleChange}
+              value={String(formData.id_responsable || "")} // 🔹 Forzamos tipo string
+              onChange={(e) =>
+                setFormData((prev) => ({
+                  ...prev,
+                  id_responsable: e.target.value, // mantiene string
+                }))
+              }
               className="border p-2 rounded-md w-full mt-1"
             >
               <option value="">Seleccione un usuario</option>

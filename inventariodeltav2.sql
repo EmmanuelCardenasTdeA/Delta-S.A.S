@@ -120,7 +120,7 @@ CREATE TABLE `produccion` (
 --
 -- Estructura de tabla para la tabla `usuario`
 --
-
+-- Tabla Usuario
 CREATE TABLE `usuario` (
   `id_documento` bigint(20) NOT NULL,
   `nombre` varchar(50) DEFAULT NULL,
